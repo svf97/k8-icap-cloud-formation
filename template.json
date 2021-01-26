@@ -18,7 +18,7 @@
         }
     },
     "Outputs": {
-        "BackupLoadBalancerDNSName": {
+        "icapLoadBalancerDNSName": {
             "Description": "The DNSName of load balancer",
             "Value": {
                 "Fn::GetAtt": [
@@ -244,7 +244,7 @@
                 "KeyName": "icapcf"
             }
         },
-        "EcsInstanceAsg": {
+        "InstanceAsg": {
             "Type": "AWS::AutoScaling::AutoScalingGroup",
             "Properties": {
                 "VPCZoneIdentifier": [
