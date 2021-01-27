@@ -1,0 +1,289 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Cloudformation template of creating icap servers under Load balancer",
+    "Parameters": {
+        "InstanceCount": {
+            "Type": "String",
+            "Default": "4",
+            "Description": "Enter No of instances to be created"
+        },
+        "amiId": {
+            "Type": "String",
+            "Description": "Enter AMI ID"
+        },
+        "InstanceSize": {
+            "Type": "String",
+            "Default": "t2.xlarge",
+            "Description": "Enter Size of Instance"
+        }
+    },
+    "Outputs": {
+        "icapLoadBalancerDNSName": {
+            "Description": "The DNSName of load balancer",
+            "Value": {
+                "Fn::GetAtt": [
+                    "icapLb",
+                    "DNSName"
+                ]
+            }
+        }
+    },
+    "Resources": {
+        "LBVPC": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": "10.16.0.0/16",
+                "InstanceTenancy": "default",
+                "EnableDnsSupport": "true",
+                "EnableDnsHostnames": "true",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "icapEc2NLBVPC"
+                    },
+                    {
+                        "Key": "CFStack",
+                        "Value": {
+                            "Ref": "AWS::StackId"
+                        }
+                    }
+                ]
+            }
+        },
+        "Subnet": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "LBVPC"
+                },
+                "CidrBlock": "10.16.0.0/24",
+                "Tags": [
+                    {
+                        "Key": "CFStack",
+                        "Value": {
+                            "Ref": "AWS::StackId"
+                        }
+                    }
+                ]
+            }
+        },
+        "InternetGateway": {
+            "Type": "AWS::EC2::InternetGateway",
+            "Properties": {
+                "Tags": [
+                    {
+                        "Key": "CFStack",
+                        "Value": {
+                            "Ref": "AWS::StackId"
+                        }
+                    }
+                ]
+            }
+        },
+        "AttachGateway": {
+            "Type": "AWS::EC2::VPCGatewayAttachment",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "LBVPC"
+                },
+                "InternetGatewayId": {
+                    "Ref": "InternetGateway"
+                }
+            }
+        },
+        "LBVPCRouteTable": {
+            "Type": "AWS::EC2::RouteTable",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "LBVPC"
+                },
+                "Tags": [
+                    {
+                        "Key": "CFStack",
+                        "Value": {
+                            "Ref": "AWS::StackId"
+                        }
+                    }
+                ]
+            }
+        },
+        "LBRoute": {
+            "Type": "AWS::EC2::Route",
+            "DependsOn": "AttachGateway",
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "LBVPCRouteTable"
+                },
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "GatewayId": {
+                    "Ref": "InternetGateway"
+                }
+            }
+        },
+        "SubnetRouteTableAssociation": {
+            "Type": "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "Subnet"
+                },
+                "RouteTableId": {
+                    "Ref": "LBVPCRouteTable"
+                }
+            }
+        },
+        "InstanceSecurityGroup": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "VpcId": {
+                    "Ref": "LBVPC"
+                },
+                "GroupDescription": "Incoming connections for Icap servers from LB",
+                "SecurityGroupIngress": [
+                    {
+                        "IpProtocol": "TCP",
+                        "FromPort": "1344",
+                        "ToPort": "1344",
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "TCP",
+                        "FromPort": "22",
+                        "ToPort": "22",
+                        "CidrIp": "0.0.0.0/0"
+                    }
+                ]
+            }
+        },
+        "icapLb": {
+            "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+            "Properties": {
+                "Name": "icapLb",
+                "Scheme": "internet-facing",
+                "Subnets": [
+                    {
+                        "Ref": "Subnet"
+                    }
+                ],
+                "Type": "network",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "icapLb"
+                    },
+                    {
+                        "Key": "CFStack",
+                        "Value": {
+                            "Ref": "AWS::StackId"
+                        }
+                    }
+                ]
+            }
+        },
+        "icapLBListener": {
+            "Type": "AWS::ElasticLoadBalancingV2::Listener",
+            "Properties": {
+                "DefaultActions": [
+                    {
+                        "Type": "forward",
+                        "TargetGroupArn": {
+                            "Ref": "icapLBTargetGroup"
+                        }
+                    }
+                ],
+                "LoadBalancerArn": {
+                    "Ref": "icapLb"
+                },
+                "Port": 1344,
+                "Protocol": "TCP"
+            }
+        },
+        "icapLBTargetGroup": {
+            "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+            "Properties": {
+                "Name": "icapLBTargetGroup",
+                "Port": 1344,
+                "Protocol": "TCP",
+                "VpcId": {
+                    "Ref": "LBVPC"
+                },
+                "TargetGroupAttributes": [
+                    {
+                        "Key": "deregistration_delay.timeout_seconds",
+                        "Value": 60
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "icapLBTargetGroup"
+                    },
+                    {
+                        "Key": "CFStack",
+                        "Value": {
+                            "Ref": "AWS::StackId"
+                        }
+                    }
+                ]
+            }
+        },
+        "ASGLaunchConfig": {
+            "Type": "AWS::AutoScaling::LaunchConfiguration",
+            "Properties": {
+                "InstanceType": {
+                    "Ref": "InstanceSize"
+                },
+                "AssociatePublicIpAddress": true,
+                "SecurityGroups": [
+                    {
+                        "Ref": "InstanceSecurityGroup"
+                    }
+                ],
+                "ImageId": {
+                    "Ref": "amiId"
+                },
+                "KeyName": "icapcf"
+            }
+        },
+        "InstanceAsg": {
+            "Type": "AWS::AutoScaling::AutoScalingGroup",
+            "Properties": {
+                "VPCZoneIdentifier": [
+                    {
+                        "Ref": "Subnet"
+                    }
+                ],
+                "LaunchConfigurationName": {
+                    "Ref": "ASGLaunchConfig"
+                },
+                "MinSize": {
+                    "Ref": "InstanceCount"
+                },
+                "MaxSize": {
+                    "Ref": "InstanceCount"
+                },
+                "DesiredCapacity": {
+                    "Ref": "InstanceCount"
+                },
+                "TargetGroupARNs": [
+                    {
+                        "Ref": "icapLBTargetGroup"
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "icapEc2NLBInstance",
+                        "PropagateAtLaunch": true
+                    },
+                    {
+                        "Key": "CFStack",
+                        "Value": {
+                            "Ref": "AWS::StackId"
+                        },
+                        "PropagateAtLaunch": true
+                    }
+                ]
+            }
+        }
+    }
+}
