@@ -1,4 +1,4 @@
-STACK_NAME="dinis-stack"
+STACK_NAME="dinis-stack-with-el-ip"
 AMI="ami-00cd73b6db47ea463"
 REGION="eu-west-3"
 PROFILE="785217600689_AdministratorAccess"

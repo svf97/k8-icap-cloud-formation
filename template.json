@@ -19,7 +19,11 @@
         "KeyName": {
             "Type": "String",            
             "Description": "Enter Image Key Name"
-        }  
+        }  , 
+        "ElasticIp": {
+            "Type": "String",            
+            "Description": "Enter the load balancer Elastic IP"
+        }         
     },
     "Outputs": {
         "icapLoadBalancerDNSName": {
@@ -163,10 +167,13 @@
             "Properties": {
                 "Name": "icapLb",
                 "Scheme": "internet-facing",
-                "Subnets": [
-                    {
-                        "Ref": "Subnet"
-                    }
+                "SubnetMappings": [
+                    {                        
+                       "AllocationId": {"Ref":"ElasticIp"},
+                        "SubnetId": {
+                            "Ref": "Subnet"
+                        }
+                    }                
                 ],
                 "Type": "network",
                 "Tags": [
