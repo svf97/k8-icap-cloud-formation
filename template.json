@@ -23,7 +23,27 @@
         "ElasticIp": {
             "Type": "String",            
             "Description": "Enter the load balancer Elastic IP"
-        }         
+        } , 
+        "TagName": {
+            "Type": "String",            
+            "Default": "cf-created-ec2",            
+            "Description": "Enter the default Tag name for the EC2 instances"
+        },
+        "TargetGroupName": {
+            "Type": "String",            
+            "Default": "NewicapLBTargetGroup",            
+            "Description": "Enter the Target Group Name"
+        } ,
+        "icapLbName": {
+            "Type": "String",            
+            "Default": "icapLbName",            
+            "Description": "Enter the Target Group Name"
+        }, 
+        "Ec2RootVolumeSize": {
+            "Description": " Ec2 root volume size",
+            "Type": "String",
+            "Default": "64"
+        }                
     },
     "Outputs": {
         "icapLoadBalancerDNSName": {
@@ -165,7 +185,7 @@
         "icapLb": {
             "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
             "Properties": {
-                "Name": "icapLb",
+                "Name": { "Ref": "icapLbName"},
                 "Scheme": "internet-facing",
                 "SubnetMappings": [
                     {                        
@@ -179,7 +199,7 @@
                 "Tags": [
                     {
                         "Key": "Name",
-                        "Value": "icapLb"
+                        "Value": { "Ref" : "icapLbName"}
                     },
                     {
                         "Key": "CFStack",
@@ -211,7 +231,9 @@
         "icapLBTargetGroup": {
             "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
             "Properties": {
-                "Name": "icapLBTargetGroup",
+                "Name": {
+                    "Ref": "TargetGroupName"
+                },
                 "Port": 1344,
                 "Protocol": "TCP",
                 "VpcId": {
@@ -226,7 +248,9 @@
                 "Tags": [
                     {
                         "Key": "Name",
-                        "Value": "icapLBTargetGroup"
+                        "Value": {
+                            "Ref": "TargetGroupName"
+                        }
                     },
                     {
                         "Key": "CFStack",
@@ -254,7 +278,17 @@
                 },
                 "KeyName": {
                     "Ref": "KeyName"
-                }                
+                }, 
+                "BlockDeviceMappings": [
+                    {
+                        "DeviceName": "/dev/sda1",
+                        "Ebs": {
+                            "DeleteOnTermination": "true",
+                            "VolumeSize": {
+                                "Ref": "Ec2RootVolumeSize"
+                            }
+                        }
+                    }]                
             }
         },
         "InstanceAsg": {
@@ -285,7 +319,9 @@
                 "Tags": [
                     {
                         "Key": "Name",
-                        "Value": "icapEc2NLBInstance",
+                        "Value": {
+                            "Ref": "TagName"
+                        },                        
                         "PropagateAtLaunch": true
                     },
                     {
