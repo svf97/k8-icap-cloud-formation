@@ -15,7 +15,11 @@
             "Type": "String",
             "Default": "t2.xlarge",
             "Description": "Enter Size of Instance"
-        }
+        },
+        "KeyName": {
+            "Type": "String",            
+            "Description": "Enter Image Key Name"
+        }  
     },
     "Outputs": {
         "icapLoadBalancerDNSName": {
@@ -241,7 +245,9 @@
                 "ImageId": {
                     "Ref": "amiId"
                 },
-                "KeyName": "icapcf"
+                "KeyName": {
+                    "Ref": "KeyName"
+                }                
             }
         },
         "InstanceAsg": {
