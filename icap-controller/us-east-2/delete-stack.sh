@@ -1,5 +1,5 @@
-STACK_NAME="icap-with-load-balancer--controller"
-REGION="eu-west-3"
+STACK_NAME=$1
+REGION="us-east-2"
 PROFILE="785217600689_AdministratorAccess"
 
 aws cloudformation delete-stack                                         \

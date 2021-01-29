@@ -1,0 +1,63 @@
+all.icap.glasswall-icap.com :
+    # 30 servers
+    - name  : lb-us-east-2__1_a__3.139.5.226
+      ip    : 3.139.5.226
+      port  : 1344
+    - name  : lb-us-east-2__1_a__3.139.5.226
+      ip    : 3.139.5.226
+      port  : 1344
+    - name  : lb-us-east-2__1_a__3.139.5.226
+      ip    : 3.139.5.226
+      port  : 1344
+
+    # 25 servers
+    - name  : lb-us-east-2__2__a__3.139.32.13
+      ip    : 3.139.32.13
+      port  : 1344
+    - name  : lb-us-east-2__2__b__3.139.32.13
+      ip    : 3.139.32.13
+      port  : 1344  
+
+    # 40 servers
+    - name  : lb-us-east-2__3__a__18.216.36.55
+      ip    : 18.216.36.55
+      port  : 1344
+    - name  : lb-us-east-2__3__b__18.216.36.55
+      ip    : 18.216.36.55
+      port  : 1344
+    - name  : lb-us-east-2__3__c__18.216.36.55
+      ip    : 18.216.36.55
+      port  : 1344
+    - name  : lb-us-east-2__3__d__18.216.36.55
+      ip    : 18.216.36.55
+      port  : 1344
+    
+    # 10 servers
+    - name  : lb-eu-west-3__1__a__35.181.68.251
+      ip    : 35.181.68.251
+      port  : 1344
+    
+    # 20 servers         
+    - name  : lb-eu-west-3__2__a__35.181.126.113
+      ip    : 35.181.126.113
+      port  : 1344
+    - name  : lb-eu-west-3__2__b__35.181.126.113
+      ip    : 35.181.126.113
+      port  : 1344
+
+
+#   - name  : elastisis__51.89.210.148
+#     ip    : 51.89.210.148
+#     port  : 1344
+#   - name  : elastisis__51.89.210.149
+#     ip    : 51.89.210.149
+#     port  : 1344
+#   - name  : elastisis__51.89.210.151
+#     ip    : 51.89.210.151
+#     port  : 1344
+#   - name  : elastisis__51.89.210.152
+#     ip    : 51.89.210.152
+#     port  : 1344
+#   - name  : elastisis__51.89.210.155
+#     ip    : 51.89.210.155
+#     port  : 1344
