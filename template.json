@@ -17,33 +17,33 @@
             "Description": "Enter Size of Instance"
         },
         "KeyName": {
-            "Type": "String",            
+            "Type": "String",
             "Description": "Enter Image Key Name"
-        }  , 
+        },
         "ElasticIp": {
-            "Type": "String",            
+            "Type": "String",
             "Description": "Enter the load balancer Elastic IP"
-        } , 
+        },
         "TagName": {
-            "Type": "String",            
-            "Default": "cf-created-ec2",            
+            "Type": "String",
+            "Default": "cf-created-ec2",
             "Description": "Enter the default Tag name for the EC2 instances"
         },
         "TargetGroupName": {
-            "Type": "String",            
-            "Default": "NewicapLBTargetGroup",            
+            "Type": "String",
+            "Default": "NewicapLBTargetGroup",
             "Description": "Enter the Target Group Name"
-        } ,
+        },
         "icapLbName": {
-            "Type": "String",            
-            "Default": "icapLbName",            
+            "Type": "String",
+            "Default": "icapLbName",
             "Description": "Enter the Target Group Name"
-        }, 
+        },
         "Ec2RootVolumeSize": {
             "Description": " Ec2 root volume size",
             "Type": "String",
             "Default": "64"
-        }                
+        }
     },
     "Outputs": {
         "icapLoadBalancerDNSName": {
@@ -105,7 +105,15 @@
                             "Ref": "AWS::StackId"
                         }
                     }
-                ]
+                ],
+                "AvailabilityZone": {
+                    "Fn::Select": [
+                        0,
+                        {
+                            "Fn::GetAZs": ""
+                        }
+                    ]
+                }
             }
         },
         "AttachGateway": {
@@ -178,6 +186,18 @@
                         "FromPort": "22",
                         "ToPort": "22",
                         "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "TCP",
+                        "FromPort": "1345",
+                        "ToPort": "1345",
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "TCP",
+                        "FromPort": "31829",
+                        "ToPort": "31829",
+                        "CidrIp": "0.0.0.0/0"
                     }
                 ]
             }
@@ -185,21 +205,27 @@
         "icapLb": {
             "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
             "Properties": {
-                "Name": { "Ref": "icapLbName"},
+                "Name": {
+                    "Ref": "icapLbName"
+                },
                 "Scheme": "internet-facing",
                 "SubnetMappings": [
-                    {                        
-                       "AllocationId": {"Ref":"ElasticIp"},
+                    {
+                        "AllocationId": {
+                            "Ref": "ElasticIp"
+                        },
                         "SubnetId": {
                             "Ref": "Subnet"
                         }
-                    }                
+                    }
                 ],
                 "Type": "network",
                 "Tags": [
                     {
                         "Key": "Name",
-                        "Value": { "Ref" : "icapLbName"}
+                        "Value": {
+                            "Ref": "icapLbName"
+                        }
                     },
                     {
                         "Key": "CFStack",
@@ -278,7 +304,7 @@
                 },
                 "KeyName": {
                     "Ref": "KeyName"
-                }, 
+                },
                 "BlockDeviceMappings": [
                     {
                         "DeviceName": "/dev/sda1",
@@ -288,7 +314,8 @@
                                 "Ref": "Ec2RootVolumeSize"
                             }
                         }
-                    }]                
+                    }
+                ]
             }
         },
         "InstanceAsg": {
@@ -321,7 +348,7 @@
                         "Key": "Name",
                         "Value": {
                             "Ref": "TagName"
-                        },                        
+                        },
                         "PropagateAtLaunch": true
                     },
                     {
