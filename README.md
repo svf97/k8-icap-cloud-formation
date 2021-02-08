@@ -1,5 +1,8 @@
 # k8-icap-cloud-formation
 
+#### Prerequisite: 
+To run this provided cloud formation script you will need to have PEM key pair and Elastic IP pre-created.
+
 To create stack, run below command:
 
 ```shell
