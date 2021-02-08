@@ -1,8 +1,8 @@
 # **** eu-west-3 ***** 
 # 
-# Elastric IPs in eu-west-2 
-#   eipalloc-0877b45a3322586f2 : 35.181.68.251  (10 servers)    v1
-#   eipalloc-03be0f9ffddb671b4 : 35.181.126.113 (20 servers)    v1
+# Elastric IPs in eu-west-3 
+#   eipalloc-0877b45a3322586f2 : 35.181.68.251  ( servers)           
+#   eipalloc-03be0f9ffddb671b4 : 35.181.126.113 (10 servers)  - 4th Feb
 
 #   eipalloc-0293bbe1a4fa8c82e : 52.47.204.173  (no vCPU)
 
