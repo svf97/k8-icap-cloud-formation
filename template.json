@@ -352,6 +352,21 @@
                         "PropagateAtLaunch": true
                     },
                     {
+                        "Key": "Owner",
+                        "Value": "IcapCloudFormation",
+                        "PropagateAtLaunch": true
+                    },
+                    {
+                        "Key": "Delete",
+                        "Value": "No",
+                        "PropagateAtLaunch": true
+                    },
+                    {
+                        "Key": "Scope",
+                        "Value": "Stack created using CloudFormation scripts",
+                        "PropagateAtLaunch": true
+                    },
+                    {
                         "Key": "CFStack",
                         "Value": {
                             "Ref": "AWS::StackId"
