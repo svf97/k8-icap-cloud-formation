@@ -50,8 +50,18 @@ aws configure
 ```
 ./create-stack.sh YOUR_ALLOCATION_ID NUMBER_OF_INSTANCES
 ``` 
+Example Output:
+```
+************************************************************
 
-To get loadbalancer DNS name:
+**** Creating EC2 servers via cloud formation           ****
+
+in us-east-2 creating 2 servers mapped to elastic ip YOUR_ALLOCATION_ID
+{
+    "StackId": "arn:aws:cloudformation:us-east-2:..."
+}
+```
+- To get loadbalancer DNS name:
 ```shell
     aws cloudformation describe-stacks --stack-name icapstack
 ```
