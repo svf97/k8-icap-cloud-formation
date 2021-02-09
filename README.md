@@ -1,28 +1,18 @@
 # k8-icap-cloud-formation
 
-#### Prerequisite: 
-To run this provided cloud formation script you will need to have PEM key pair and Elastic IP pre-created.
 
-To create stack, run below command:
+## Prerequisites
+To run this provided cloud formation script you will need to have:
 
-```shell
-aws cloudformation create-stack                                                             \
-                --stack-name ${STACK_NAME}                                                  \
-                --template-body file://../template.json                                     \
-                --parameters ParameterKey=amiId,ParameterValue=${AMI}                       \
-                             ParameterKey=KeyName,ParameterValue=${KEY_NAME}                \
-                             ParameterKey=InstanceCount,ParameterValue=${INSTANCE_COUNT}    \
-                             ParameterKey=ElasticIp,ParameterValue=${ELASTIC_IP}            \
-                             ParameterKey=InstanceSize,ParameterValue=${INSTANCE_SIZE}      \
-                             ParameterKey=TagName,ParameterValue=${STACK_NAME}              \
-                             ParameterKey=TargetGroupName,ParameterValue=${STACK_NAME}      \
-                             ParameterKey=icapLbName,ParameterValue=${STACK_NAME}           \
-                             ParameterKey=Ec2RootVolumeSize,ParameterValue=${Ec2RootVolumeSize}    \
-                --region $REGION 
+- AWS account with CloudFormation access to create & delete stacks
+- AWS CLI
+- PEM key pair
+- Elastic IP pre-created
+
+### Parameters
+The following are the parameters on `template.json` that can be modified
 
 ```
-#### Parameters: 
-```shell
     stack-name : Name of CloudFormation stack
     amiId : AMI ID, Required: Yes
     KeyName: Name of pem file to be used while creating instance
@@ -36,15 +26,10 @@ aws cloudformation create-stack                                                 
     region: Region in which all resources are to be launched
 ```
 
-```shell
+## Create stack of ICAP Servers
 
-aws cloudformation create-stack --stack-name icapstack --template-body file://template.json --parameters ParameterKey=amiId,ParameterValue=ami-0076cc992990f6173
+## Create stack of Loadbalancers
 
-aws cloudformation create-stack --stack-name icapstack --template-body file:///home/minion/glasswall/k8-icap-cloud-formation/template.json --parameters ParameterKey=amiId,ParameterValue=ami-0076cc992990f6173 ParameterKey=InstanceCount,ParameterValue=2
-
-aws cloudformation create-stack --stack-name icapstack --template-body file:///home/minion/glasswall/k8-icap-cloud-formation/template.json --parameters ParameterKey=amiId,ParameterValue=ami-0076cc992990f6173 ParameterKey=InstanceCount,ParameterValue=2 ParameterKey=InstanceSize,ParameterValue=t2.large
-
-```
 
 To get loadbalancer DNS name:
 ```shell
