@@ -7,7 +7,7 @@ To run this provided cloud formation script you will need to have:
 - AWS account with CloudFormation access to create & delete stacks
 - AWS CLI
 - PEM key pair
-- Elastic IP pre-created
+- Elastic IP pre-created & its corresponding Allocation ID
 
 ### Parameters
 The following are the parameters on `template.json` that can be modified
@@ -30,6 +30,26 @@ The following are the parameters on `template.json` that can be modified
 
 ## Create stack of Loadbalancers
 
+- Clone the repo 
+```
+git clone https://github.com/k8-proxy/k8-icap-cloud-formation.git
+```
+- Navigate to `icap-controller` & pick a region
+```
+cd k8-icap-cloud-formation/icap-controller/us-east-2
+```
+- Configure your AWS CLI with your
+    - AWS Access Key ID
+    - AWS Secret Access Key
+    - Default region name
+    - Default output format > JSON
+```
+aws configure
+```
+- To create stack of loadbalancers, run
+```
+./create-stack.sh YOUR_ALLOCATION_ID NUMBER_OF_INSTANCES
+``` 
 
 To get loadbalancer DNS name:
 ```shell
