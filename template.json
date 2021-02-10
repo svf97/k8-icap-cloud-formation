@@ -18,11 +18,11 @@
         },
         "KeyName": {
             "Type": "String",
-            "Description": "Enter Image Key Name"
+            "Description": "Enter SSH Key pair Name"
         },
         "ElasticIp": {
             "Type": "String",
-            "Description": "Enter the load balancer Elastic IP"
+            "Description": "Enter allocationId of Elastic IP for Load Balancer"
         },
         "TagName": {
             "Type": "String",
@@ -197,6 +197,12 @@
                         "IpProtocol": "TCP",
                         "FromPort": "31829",
                         "ToPort": "31829",
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "TCP",
+                        "FromPort": "7000",
+                        "ToPort": "7000",
                         "CidrIp": "0.0.0.0/0"
                     }
                 ]
