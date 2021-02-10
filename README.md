@@ -1,5 +1,5 @@
 # k8-icap-cloud-formation
-
+![k8-cloud-formation](https://user-images.githubusercontent.com/70108899/107366117-0c810c80-6ade-11eb-8753-289c28bd1135.png)
 
 ## Prerequisites
 To run this provided cloud formation script you will need to have:
