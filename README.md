@@ -75,3 +75,9 @@ Details of LoadBalancer DNS can be found in output:
                 }
             ]
 ```
+
+### Launching with Click of Button
+| Region           | Stack                                                                                                                                                                                                                                                                                                                                      |
+|------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Ireland          | [<img src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png">](https://console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks/new?stackName=IcapLoadBalancerStack&templateURL=http://icap-cloudformation-template.s3-eu-west-1.amazonaws.com/template.json) |
+| Ohio  | [<img src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png">](https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=IcapLoadBalancerStack&templateURL=http://icap-cloudformation-template.s3-eu-west-1.amazonaws.com/template.json) |
