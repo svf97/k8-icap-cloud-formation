@@ -48,7 +48,7 @@ aws configure
 ```
 - To create stack of loadbalancers, run
 ```
-./create-stack.sh YOUR_ALLOCATION_ID NUMBER_OF_INSTANCES
+./create-stack.sh YOUR_ALLOCATION_ID NUMBER_OF_INSTANCES PROFILE_Name(Optional)
 ``` 
 Example Output:
 ```
@@ -63,9 +63,9 @@ in us-east-2 creating 2 servers mapped to elastic ip YOUR_ALLOCATION_ID
 ```
 - To get loadbalancer DNS name:
 ```shell
-    aws cloudformation describe-stacks --stack-name icapstack
+    aws cloudformation describe-stacks --stack-name icapstack  --region region_name   
 ```
-Exmple output:
+Details of LoadBalancer DNS can be found in output:
 ```shell
 "Outputs": [
                 {
