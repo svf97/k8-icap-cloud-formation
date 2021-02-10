@@ -20,7 +20,7 @@ echo "in ${REGION} creating ${INSTANCE_COUNT} servers mapped to elastic ip ${ELA
 
 
 AMI="ami-09c44a4de6a377b3d"             # icap-server (controller) eu-west-2
-PROFILE="{$3:-default}"
+PROFILE="${3:-default}"
 #PROFILE="785217600689_AdministratorAccess"
 KEY_NAME="cf-icap_eu-west-3"
 #ELASTIC_IP="eipalloc-0293bbe1a4fa8c82e" # eipalloc-03be0f9ffddb671b4" #"eipalloc-0877b45a3322586f2"
