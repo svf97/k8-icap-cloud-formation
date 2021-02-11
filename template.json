@@ -92,7 +92,15 @@
                             "Ref": "AWS::StackId"
                         }
                     }
-                ]
+                ],
+                "AvailabilityZone": {
+                    "Fn::Select": [
+                        0,
+                        {
+                            "Fn::GetAZs": ""
+                        }
+                    ]
+                }
             }
         },
         "InternetGateway": {
@@ -105,15 +113,7 @@
                             "Ref": "AWS::StackId"
                         }
                     }
-                ],
-                "AvailabilityZone": {
-                    "Fn::Select": [
-                        0,
-                        {
-                            "Fn::GetAZs": ""
-                        }
-                    ]
-                }
+                ]
             }
         },
         "AttachGateway": {
