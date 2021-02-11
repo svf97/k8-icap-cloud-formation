@@ -29,6 +29,7 @@ The following are the parameters on `template.json` that can be modified
 ## Create stack of ICAP Servers
 
 ## Create stack of Loadbalancers
+### Method 1:  AWS CLI
 
 - Clone the repo 
 ```
@@ -46,6 +47,15 @@ cd k8-icap-cloud-formation/icap-controller/us-east-2
 ```
 aws configure
 ```
+- If your have MFA token enabled for authentication to AWS account you should [set up MFA token authenticate through AWS CLI](https://aws.amazon.com/premiumsupport/knowledge-center/authenticate-mfa-cli/)
+    - Run: `aws sts get-session-token --serial-number arn-of-the-mfa-device --token-code code-from-token`
+    - Replace arn-of-the-mfa-device with your username and AWS number and enter MFA code as code-from-token 
+    - Then export keys
+        ```
+        export AWS_ACCESS_KEY_ID=<Value>
+        export AWS_SECRET_ACCESS_KEY=<Value>
+        export AWS_SESSION_TOKEN= <Value>
+        ```
 - To create stack of loadbalancers, run
 ```
 ./create-stack.sh YOUR_ALLOCATION_ID NUMBER_OF_INSTANCES PROFILE_Name(Optional)
@@ -61,23 +71,21 @@ in us-east-2 creating 2 servers mapped to elastic ip YOUR_ALLOCATION_ID
     "StackId": "arn:aws:cloudformation:us-east-2:..."
 }
 ```
-- To get loadbalancer DNS name:
-```shell
-    aws cloudformation describe-stacks --stack-name icapstack  --region region_name   
-```
-Details of LoadBalancer DNS can be found in output:
-```shell
-"Outputs": [
-                {
-                    "OutputKey": "icapLoadBalancerDNSName",
-                    "OutputValue": "icapLb-e970d3d3e47e0e78.elb.us-east-2.amazonaws.com",
-                    "Description": "The DNSName of load balancer"
-                }
-            ]
-```
 
-### Launching with Click of Button
+### Method 2: Launching with Click of Button
 | Region           | Stack                                                                                                                                                                                                                                                                                                                                      |
 |------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Ireland          | [<img src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png">](https://console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks/new?stackName=IcapLoadBalancerStack&templateURL=http://icap-cloudformation-template.s3-eu-west-1.amazonaws.com/template.json) |
+| Paris          | [<img src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png">](https://console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks/new?stackName=IcapLoadBalancerStack&templateURL=http://icap-cloudformation-template.s3-eu-west-1.amazonaws.com/template.json) |
 | Ohio  | [<img src="https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png">](https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=IcapLoadBalancerStack&templateURL=http://icap-cloudformation-template.s3-eu-west-1.amazonaws.com/template.json) |
+
+
+- Click on one of the buttons above depending on the region you want to  work on
+- When prompted with the image below, click Next 
+
+![create-stack](https://user-images.githubusercontent.com/60857664/107665722-64fb0a00-6c96-11eb-9e05-ff00615e4e05.png)
+
+- Add in your Elastic IP Allocation ID, AMI ID, & Key Name
+
+![parameters](https://user-images.githubusercontent.com/60857664/107666135-d9ce4400-6c96-11eb-8c05-c54b6aa3d788.png)
+
+- For the next page, leave everything at default, review and create stack
