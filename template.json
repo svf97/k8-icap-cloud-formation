@@ -266,6 +266,13 @@
                 "Name": {
                     "Ref": "TargetGroupName"
                 },
+                "HealthCheckEnabled" : true,
+                "HealthCheckIntervalSeconds" : "30",
+                "HealthCheckPath" : "/status",
+                "HealthCheckPort":7000,
+                "HealthCheckProtocol":"HTTP",
+                "HealthyThresholdCount":2,
+                "UnhealthyThresholdCount":2,
                 "Port": 1344,
                 "Protocol": "TCP",
                 "VpcId": {
@@ -365,6 +372,11 @@
                     {
                         "Key": "Delete",
                         "Value": "No",
+                        "PropagateAtLaunch": true
+                    },
+                    {
+                        "Key": "Team",
+                        "Value": "K8-CF",
                         "PropagateAtLaunch": true
                     },
                     {
