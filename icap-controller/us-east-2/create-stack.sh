@@ -24,7 +24,8 @@ INSTANCE_COUNT=$2
 STACK_NAME=$ELASTIC_IP
 AMI="ami-0cd0b2d048f8e2a89"              # icap-server (controller v0.2) us-east-2
 #AMI="ami-02400dfefefc074db"             # icap-server (controller) us-east-2
-PROFILE="785217600689_AdministratorAccess"
+#PROFILE="${3:-default}"
+#PROFILE="{785217600689_AdministratorAccess}"
 KEY_NAME="cf-icap_us-east-2"
 INSTANCE_SIZE="t2.xlarge" # c5.4xlarge" #"i3.2xlarge" 
 
@@ -40,4 +41,3 @@ aws cloudformation create-stack                                                 
                              ParameterKey=TargetGroupName,ParameterValue=${STACK_NAME}      \
                              ParameterKey=icapLbName,ParameterValue=${STACK_NAME}           \
                 --region $REGION                                                            \
-                --profile $PROFILE
