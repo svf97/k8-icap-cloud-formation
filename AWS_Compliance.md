@@ -1,13 +1,14 @@
 # Dashboard documentation / AWS Compliance
  
 - [AWS Compliance](#Instructions-to-have-the-tags-in-compliance)
-- [access and use dashboards](#access-and-use-dashboards)
+- [Access and dashboards](#Access-and-dashboards)
 
 
 ## Instructions to have the VMs created in AWS in compliance
 
 *All instances should contain the following 4 tags:
-• Delete: Yes/No (Any other values are treated as non-compliant and Stopped. All the instances that are marked as Delete: Yes will be deleted EOD).
+
+• Delete: Yes/No (Any other values are treated as non-compliant and VM is stopped. All the instances that are marked as Delete: Yes will be deleted EOD).
 
 • Owner (**Name of the VM creator**)
 
@@ -19,16 +20,16 @@
  
  ## Delete and stop VMs process
 
-• VMs that are  non-compliant, will be stopped, but not deleted. Only VMs tagged to  Delete: Yes will be deleted.
+• VMs that are non-compliant, will be stopped, but not deleted. Only VMs tagged to Delete:Yes will be deleted.
 
 ```
 Note: If the VM is Non-compliant it gets stopped automatically. The script is not periodic, it detects when an instance gets created, started, stopped and checks required tags.
 ``` 
 
 
-## Access and use dashboards
+## Access and dashboards
 
-• Dashboard ccess is only for AWS administrators. 
+• Dashboard access is only for AWS administrators. 
 
 ```
 • Note: 
