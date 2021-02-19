@@ -1,40 +1,34 @@
 # Dashboard documentation / AWS Compliance
  
-- [AWS Compliance](#Instructions-to-have-the-tags-in-compliance)
-- [Access and dashboards](#Access-and-dashboards)
+- [Dashboard documentation / AWS Compliance](#dashboard-documentation--aws-compliance)
+  - [Details of mandatory tags to be added to Instance](#details-of-mandatory-tags-to-be-added-to-instance)
+  - [Dashboards for AWS Monitoring](#dashboards-for-aws-monitoring)
 
 
-## Instructions to have the VMs created in AWS in compliance
+## Details of mandatory tags to be added to Instance
 
-*All instances should contain the following 4 tags:
+All instances should be tagged with following mandatory tags:
 
-• Delete: Yes/No (Any other values are treated as non-compliant and VM is stopped. All the instances that are marked as Delete: Yes will be deleted EOD).
+    - Owner : *Owner of Instance*
 
-• Owner (**Name of the VM creator**)
+    - Team  : *K8/GW/Sales* Team for which instance is created
 
-• Team (K8, GW, Sales) "**which team the VM belongs to**"
+    - Scope :  Purpose of creation of instance. In case Instances is marked as No, a valid justification to keep instance running
 
-• Scope/Reason for “do not delete” VMs
- (**list the reasons why not to be deleted if the owner wants to be kept alive**)
- 
- 
- ## Delete and stop VMs process
+    - Delete: *Yes/No* (Any other values are treated as non-compliant)
 
-• VMs that are non-compliant, will be stopped, but not deleted. Only VMs tagged to Delete:Yes will be deleted.
-
-```
-Note: If the VM is Non-compliant it gets stopped automatically. The script is not periodic, it detects when an instance gets created, started, stopped and checks required tags.
-``` 
+* Any instance without any above mandatory tags is treated as non-compliant and will be stopped automatically. Be noted that Tag Keys and Values are case sensitive
+* All Instances marked as Delete:Yes will be terminated by EOD
+* If an instance is Non-compliant it gets stopped automatically. Any instance which remains non-compliant for more than 4 days will be terminated
 
 
-## Access and dashboards
 
-• Dashboard access is only for AWS administrators. 
+## Dashboards for AWS Monitoring
 
-```
-• Note: 
-(There is no steps/procedures yet for access management for now, only shared accounts is supported)
-```
+* Administrators will be provided with access to Kibana dashboards which will provide information on realtime metrics related to various scenarios. Few examples includes: 
+    - No of instances running per region
+    - No of instances created on given day per region
+    - No of instances marked as Delete:No per region
 
 ![image (2)](https://user-images.githubusercontent.com/76431508/108069641-45842880-706c-11eb-9b19-c048ef57bd2f.png)
  
