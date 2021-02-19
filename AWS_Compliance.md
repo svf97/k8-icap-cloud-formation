@@ -9,21 +9,18 @@
 
 All instances should be tagged with following mandatory tags:
 
-* Owner : *Owner of Instance*
+    - Owner : *Owner of Instance*
 
-* Team  : *K8/GW/Sales* Team for which instance is created
+    - Team  : *K8/GW/Sales* Team for which instance is created
 
-* Scope :  Purpose of creation of instance. In case Instances is marked as No, a valid justification to keep instance running
+    - Scope :  Purpose of creation of instance. In case Instances is marked as No, a valid justification to keep instance running
 
-* Delete: *Yes/No* (Any other values are treated as non-compliant)
+    - Delete: *Yes/No* (Any other values are treated as non-compliant)
 
-- Any instance without of any above mandatory tags is treated as non-compliant and will be stopped automatically. Be noted that Tag Keys and Values are case sensitive
-- All Instances marked as Delete:Yes will be terminated by EOD
+* Any instance without any above mandatory tags is treated as non-compliant and will be stopped automatically. Be noted that Tag Keys and Values are case sensitive
+* All Instances marked as Delete:Yes will be terminated by EOD
+* If an instance is Non-compliant it gets stopped automatically. Any instance which remains non-compliant for more than 4 days will be terminated
 
-
-```
-Note: If an instance is Non-compliant it gets stopped automatically. Any instance which remains non-compliant for more than 4 days will be terminated
-``` 
 
 
 ## Dashboards for AWS Monitoring
