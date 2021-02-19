@@ -6,11 +6,13 @@ To run this provided cloud formation script you will need to have:
 
 - AWS account with CloudFormation access to create & delete stacks
 - AWS CLI
-- PEM key pair
-- Elastic IP pre-created & its corresponding Allocation ID
+- Latest ICAP AMI present in same region in which stack to be created. Take a note of AMI ID
+- Create a new Key pair or take a note of exisisting key pair to be used. It is mandatory for key pair to be present in same region in which stack is to be created
+- Create a new elastic ip or take a note of allocation id existing elastic ip. It is mandatory for elastic ip to be present in same region in which stack is to be created
+  
 
 ### Parameters
-The following are the parameters on `template.json` that can be modified
+The following are the parameters present in cloudformation template
 
 ```
     stack-name : Name of CloudFormation stack
@@ -24,6 +26,7 @@ The following are the parameters on `template.json` that can be modified
     icapLbName: Tag to be used as name of Icap load balancer, Default: icapLbName
     Ec2RootVolumeSize: Size in GB for root volume to be mounted to instance, Default: 64
     region: Region in which all resources are to be launched
+    CidrIp: CIDR for allowing inbound connections to ICAP server (Ports: 22,1344,1355,443,7000)
 ```
 
 ## Create stack of ICAP Servers
@@ -34,10 +37,12 @@ The following are the parameters on `template.json` that can be modified
 - Clone the repo 
 ```
 git clone https://github.com/k8-proxy/k8-icap-cloud-formation.git
-```
-- Navigate to `icap-controller` & pick a region
-```
-cd k8-icap-cloud-formation/icap-controller/us-east-2
+
+cd k8-icap-cloud-formation/icap
+
+chmod +x create-stack.sh
+
+chmod +x delete-stack.sh
 ```
 - Configure your AWS CLI with your
     - AWS Access Key ID
@@ -56,10 +61,18 @@ aws configure
         export AWS_SECRET_ACCESS_KEY=<Value>
         export AWS_SESSION_TOKEN= <Value>
         ```
-- To create stack of loadbalancers, run
+- By executing below command, speicified number of instances will be created along with a load balancer which will balance traffic to these instances. 
 ```
-./create-stack.sh YOUR_ALLOCATION_ID NUMBER_OF_INSTANCES PROFILE_Name(Optional)
+./create-stack.sh STACK_NAME AMI_ID ELASTIC_IP_Allocation REGION INSTANCE_COUNT KEY_NAME INSTANCE_SIZE CIDR
 ``` 
+- Example Command
+```
+./create-stack.sh icapLoadTest ami-09c44a4de6a377b3d eipalloc-0877b45a3322586f2 eu-west-3 2 cf-icap_eu-west-3 t2.xlarge 0.0.0.0/0
+``` 
+
+
+
+
 Example Output:
 ```
 ************************************************************
