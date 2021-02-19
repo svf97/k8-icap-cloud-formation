@@ -43,6 +43,11 @@
             "Description": " Ec2 root volume size",
             "Type": "String",
             "Default": "64"
+        },
+        "CidrIp": {
+            "Description": "Source CIDR for Inbound rules of Security group",
+            "Type": "String",
+            "Default": "0.0.0.0/0"
         }
     },
     "Outputs": {
@@ -179,31 +184,41 @@
                         "IpProtocol": "TCP",
                         "FromPort": "1344",
                         "ToPort": "1344",
-                        "CidrIp": "0.0.0.0/0"
+                        "CidrIp": {
+                            "Ref": "CidrIp"
+                        }
                     },
                     {
                         "IpProtocol": "TCP",
                         "FromPort": "22",
                         "ToPort": "22",
-                        "CidrIp": "0.0.0.0/0"
+                        "CidrIp": {
+                            "Ref": "CidrIp"
+                        }
                     },
                     {
                         "IpProtocol": "TCP",
                         "FromPort": "1345",
                         "ToPort": "1345",
-                        "CidrIp": "0.0.0.0/0"
+                        "CidrIp": {
+                            "Ref": "CidrIp"
+                        }
                     },
                     {
                         "IpProtocol": "TCP",
-                        "FromPort": "31829",
-                        "ToPort": "31829",
-                        "CidrIp": "0.0.0.0/0"
+                        "FromPort": "443",
+                        "ToPort": "443",
+                        "CidrIp": {
+                            "Ref": "CidrIp"
+                        }
                     },
                     {
                         "IpProtocol": "TCP",
                         "FromPort": "7000",
                         "ToPort": "7000",
-                        "CidrIp": "0.0.0.0/0"
+                        "CidrIp": {
+                            "Ref": "CidrIp"
+                        }
                     }
                 ]
             }
@@ -266,13 +281,13 @@
                 "Name": {
                     "Ref": "TargetGroupName"
                 },
-                "HealthCheckEnabled" : true,
-                "HealthCheckIntervalSeconds" : "30",
-                "HealthCheckPath" : "/status",
-                "HealthCheckPort":7000,
-                "HealthCheckProtocol":"HTTP",
-                "HealthyThresholdCount":2,
-                "UnhealthyThresholdCount":2,
+                "HealthCheckEnabled": true,
+                "HealthCheckIntervalSeconds": "30",
+                "HealthCheckPath": "/status",
+                "HealthCheckPort": 7000,
+                "HealthCheckProtocol": "HTTP",
+                "HealthyThresholdCount": 2,
+                "UnhealthyThresholdCount": 2,
                 "Port": 1344,
                 "Protocol": "TCP",
                 "VpcId": {
