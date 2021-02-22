@@ -4,7 +4,7 @@
     "Parameters": {
         "InstanceCount": {
             "Type": "String",
-            "Default": "4",
+            "Default": "2",
             "Description": "Enter No of instances to be created"
         },
         "amiId": {
@@ -26,21 +26,21 @@
         },
         "TagName": {
             "Type": "String",
-            "Default": "cf-created-ec2",
+            "Default": "IcapCfServer",
             "Description": "Enter the default Tag name for the EC2 instances"
         },
         "TargetGroupName": {
             "Type": "String",
-            "Default": "NewicapLBTargetGroup",
+            "Default": "IcapTargetGroupCF",
             "Description": "Enter the Target Group Name"
         },
         "icapLbName": {
             "Type": "String",
-            "Default": "icapLbName",
+            "Default": "IcapLoadBalancerCF",
             "Description": "Enter the Target Group Name"
         },
         "Ec2RootVolumeSize": {
-            "Description": " Ec2 root volume size",
+            "Description": "Ec2 root volume size",
             "Type": "String",
             "Default": "64"
         },
