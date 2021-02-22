@@ -16,7 +16,7 @@ echo "in ${REGION} creating ${INSTANCE_COUNT} servers mapped to elastic ip ${ELA
 
 aws cloudformation create-stack                                                             \
                 --stack-name ${STACK_NAME}                                                  \
-                --template-body file://../../template.json                                  \
+                --template-body file://../template.json                                  \
                 --parameters ParameterKey=amiId,ParameterValue=${AMI}                       \
                              ParameterKey=KeyName,ParameterValue=${KEY_NAME}                \
                              ParameterKey=InstanceCount,ParameterValue=${INSTANCE_COUNT}    \
